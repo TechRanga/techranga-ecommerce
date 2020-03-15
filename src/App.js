@@ -6,7 +6,7 @@ import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 
-import {auth} from './firebase/firebase.utils';
+import {auth,createUserProfileDocument} from './firebase/firebase.utils';
 // const HatsPage=()=>(
 //   <div>
 //     <h1>HATS</h1>
@@ -26,8 +26,24 @@ class App extends React.Component {
 
   componentDidMount(){
    this.unsubscripeFromAuth = auth.onAuthStateChanged(
-      user=>{this.setState({currentUser:user})}
-    );//called when user has signed in/out > This is an open subscription. Which means we are always listening for any change in this state
+    async userAuth => {
+      if(userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+        userRef.onSnapshot(snapShot =>{
+            this.setState(
+              {
+                currentUser:{
+                  id:snapShot.id,
+                  ...snapShot.data()
+                }
+              }
+            )
+          }
+        )
+      }
+        this.setState({currentUser:userAuth});
+    }
+    );
   };
 
   render(){

@@ -25,3 +25,30 @@ export const signInWithGoogle = () => auth.signInWithPopup(provider);
 //prompt allows you to select any google account available on the machine
 
 export default firebase;
+
+export const createUserProfileDocument = async (userAuth,additionalData) => {
+    if(!userAuth) return;
+
+    const userRef = firestore.doc(`users/${userAuth.uid}`);
+    const snapShot = await userRef.get();
+    
+    if(!snapShot.exists){
+        const {displayName,email} = userAuth;
+        const createdAt = new Date();
+
+        try{
+            await userRef.set(
+                {
+                    displayName,
+                    email,
+                    createdAt,
+                    ...additionalData
+                }
+            )
+        }catch(error){
+            console.log("Error Creating User::",error.message);
+        }
+    }
+
+    return userRef;
+}
