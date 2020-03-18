@@ -15,3 +15,8 @@ export const selectCartItemsCount = createSelector(
                 accumulatedQuantity + cartItem.quantity,0
         )
 );
+
+export const selectCartDisplay = createSelector(
+    [selectCart],
+    (cart) => cart.hidden
+)
