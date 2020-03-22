@@ -19,13 +19,29 @@ class ShopPage extends React.Component {
     componentDidMount(){
         const {updateCollections} = this.props
         const collectionRef = firestore.collection('collections');
-        collectionRef.onSnapshot(
+        //Observable pattern:
+        // collectionRef.onSnapshot(
+        //     async snapshot => {
+        //        const collectionsMap  = covertCollectionSnapshotToMap(snapshot);
+        //        updateCollections(collectionsMap);
+        //        this.setState({loading:false})
+        //     }
+        // );
+
+        //Promise pattern
+        collectionRef.get().then(
             async snapshot => {
-               const collectionsMap  = covertCollectionSnapshotToMap(snapshot);
-               updateCollections(collectionsMap);
-               this.setState({loading:false})
-            }
+                const collectionsMap  = covertCollectionSnapshotToMap(snapshot);
+                updateCollections(collectionsMap);
+                this.setState({loading:false})
+             }
         );
+
+        //Fetch pattern -> Returns a very nested object containing the data if using NoSQL.
+        //https://firestore.googleapis.com/v1/projects/techranga-ecommerce-db/databases/(default)/documents/collections
+        // fetch('https://firestore.googleapis.com/v1/projects/techranga-ecommerce-db/databases/(default)/documents/collections')
+        // .then(response => response.json())
+        // .then(collections => console.log(collections));
     };
 
     render(){
