@@ -25,4 +25,10 @@ export const removeItem = item =>(
         type:CartActions.REMOVE_ITEM,
         payload:item
     }
+);
+
+export const clearCart = () =>(
+    {
+        type:CartActions.CLEAR_CART
+    }
 )
