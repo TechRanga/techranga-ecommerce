@@ -19,9 +19,9 @@ export const auth = firebase.auth();
 
 export const firestore = firebase.firestore();
 
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({prompt:'select_account'})
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({prompt:'select_account'})
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
 //prompt allows you to select any google account available on the machine
 
 export default firebase;
@@ -71,3 +71,14 @@ export const covertCollectionSnapshotToMap = collections => {
             return accumulator;
         },{});
 };
+
+export const getCurrentUser = () => {
+    return new Promise(
+        (resolve,reject) => {
+            const unsubscribe = auth.onAuthStateChanged(userAuth =>{
+                unsubscribe();
+                resolve(userAuth);
+            },reject)
+        }
+    )
+}

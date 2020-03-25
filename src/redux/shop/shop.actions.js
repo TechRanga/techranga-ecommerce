@@ -13,14 +13,14 @@ export const startFetchCollection = () => (
     }
 );
 
-const fetchCollectionsSuccess = collections => (
+export const fetchCollectionsSuccess = collections => (
     {
         type:ShopActionTypes.FETCH_COLLETIONS_SUCCESS,
         payload:collections
     }
 )
 
-const fetchCollectionError = error => (
+export const fetchCollectionError = error => (
     {
         type:ShopActionTypes.FETCH_COLLETIONS_FAILURE,
         payload:error
