@@ -1,8 +1,8 @@
 import UserActionTypes from './user.actionTypes';
-export const setCurrentUser = user =>(
+export const startSignUp = userCredentials =>(
     {
-        type:UserActionTypes.SET_CURRENT_USER,
-        payload:user
+        type:UserActionTypes.SIGN_UP_START,
+        payload:userCredentials
     }
 );
 
@@ -59,3 +59,16 @@ export const signOutFailure = (message) => (
         payload:message
     }
 );
+
+export const signUpSuccess = () => (
+    {
+        type:UserActionTypes.SIGN_UP_SUCCESS
+    }
+)
+
+export const signUpFailure = (message) => (
+    {
+        type:UserActionTypes.SIGN_UP_FAILURE,
+        payload:message
+    }
+)
