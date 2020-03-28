@@ -11,7 +11,7 @@ import CheckoutPage from './pages/checkout/checkout.component';
 import {selectCurrentUser} from './redux/user/user.selector';
 import {checkUserSession} from './redux/user/user.actions';
 class App extends React.Component {
-  unsubscripeFromAuth = null;
+  
 
   componentDidMount(){
     const {checkUserSession}=this.props;
@@ -32,9 +32,6 @@ class App extends React.Component {
     );
   };
 
-  componentWillUnmount(){
-    this.unsubscripeFromAuth();//Unsubscripe oauth 
-  };  
 }
 
 
