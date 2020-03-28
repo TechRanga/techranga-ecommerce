@@ -7,6 +7,7 @@ import {auth,googleProvider,createUserProfileDocument,getCurrentUser} from '../.
 function* handleAuth(user,additionalData){
     try{
         const userRef = yield call(createUserProfileDocument,user,additionalData);
+        console.log(userRef);
         const snapShot = yield userRef.get();
         yield(put(signInSuccess({id:snapShot.id,...snapShot.data()})));
     }catch(error){
@@ -29,7 +30,7 @@ export function* onGoogleSignIn(){
 
 export function* signInWithEmail({payload:{email,password}}){
     try{
-        const {user} = auth.signInWithEmailAndPassword(email,password);
+        const {user} = yield auth.signInWithEmailAndPassword(email,password);
         yield handleAuth(user);
     }catch(error){
         yield(put(signInFailure(error)));
